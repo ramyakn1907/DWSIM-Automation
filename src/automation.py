@@ -1,5 +1,6 @@
 import os
 import clr
+import inspect
 
 # ==========================================
 # DWSIM Installation Path
@@ -7,16 +8,11 @@ import clr
 
 DWSIM_PATH = r"C:\Users\ramya\AppData\Local\DWSIM"
 
-# Add DWSIM DLL path
 os.add_dll_directory(DWSIM_PATH)
 
-# Load DWSIM Automation DLL
 clr.AddReference(os.path.join(DWSIM_PATH, "DWSIM.Automation.dll"))
 
-# Import Automation API
 from DWSIM.Automation import Automation3
-
-# .NET Classes
 from System.IO import Path
 from System import Environment
 
@@ -26,9 +22,9 @@ from System import Environment
 
 automation = Automation3()
 
-print("=" * 50)
-print("Creating Flowsheet...")
-print("=" * 50)
+print("=" * 60)
+print("DWSIM Automation Started")
+print("=" * 60)
 
 # ==========================================
 # Create Flowsheet
@@ -42,7 +38,7 @@ print("✅ Flowsheet Created")
 # Add Property Package
 # ==========================================
 
-package = flowsheet.CreateAndAddPropertyPackage("Raoult's Law")
+flowsheet.CreateAndAddPropertyPackage("Raoult's Law")
 
 print("✅ Property Package Added")
 
@@ -55,31 +51,65 @@ flowsheet.AddCompound("Water")
 print("✅ Water Compound Added")
 
 # ==========================================
-# Display Selected Compounds
+# Create Feed Stream
 # ==========================================
 
-print("\nSelected Compounds:")
-print("-" * 50)
+feed = flowsheet.AddFlowsheetObject(
+    "Material Stream",
+    "Feed"
+)
 
-for compound in flowsheet.SelectedCompounds:
-    print(compound)
+print("✅ Feed Stream Created")
+print(feed)
 
 # ==========================================
-# Display Property Packages
+# Create Pump
 # ==========================================
 
-print("\nProperty Packages:")
-print("-" * 50)
+pump = flowsheet.AddFlowsheetObject(
+    "Pump",
+    "Pump-1"
+)
 
-for pkg in flowsheet.PropertyPackages:
-    print(pkg)
+print("✅ Pump Created")
+print(pump)
+
+# ==========================================
+# Get Graphic Objects
+# ==========================================
+
+feed_graphic = feed.GraphicObject
+pump_graphic = pump.GraphicObject
+
+print("\n✅ Feed Graphic Object")
+print(feed_graphic)
+
+print("\n✅ Pump Graphic Object")
+print(pump_graphic)
+
+# ==========================================
+# Connect Feed -> Pump
+# ==========================================
+
+print("\nConnecting Feed to Pump...")
+
+flowsheet.ConnectObjects(
+    feed_graphic,
+    pump_graphic,
+    0,
+    0
+)
+
+print("✅ Feed Connected to Pump")
 
 # ==========================================
 # Save Flowsheet
 # ==========================================
 
 fileNameToSave = Path.Combine(
-    Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+    Environment.GetFolderPath(
+        Environment.SpecialFolder.Desktop
+    ),
     "FirstSimulation.dwxmz"
 )
 
@@ -89,5 +119,9 @@ automation.SaveFlowsheet(
     True
 )
 
-print("\n✅ Flowsheet Saved Successfully!")
-print("Location :", fileNameToSave)
+print("\n✅ Flowsheet Saved Successfully")
+print(fileNameToSave)
+
+print("\n" + "=" * 60)
+print("Day 4 Completed")
+print("=" * 60)
