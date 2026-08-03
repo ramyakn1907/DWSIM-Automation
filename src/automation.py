@@ -74,12 +74,26 @@ pump = flowsheet.AddFlowsheetObject(
 print("✅ Pump Created")
 print(pump)
 
+
+# ==========================================
+# Create Product Stream
+# ==========================================
+
+product = flowsheet.AddFlowsheetObject(
+    "Material Stream",
+    "Product"
+)
+
+print("✅ Product Stream Created")
+print(product)
+
 # ==========================================
 # Get Graphic Objects
 # ==========================================
 
 feed_graphic = feed.GraphicObject
 pump_graphic = pump.GraphicObject
+product_graphic = product.GraphicObject
 
 print("\n✅ Feed Graphic Object")
 print(feed_graphic)
@@ -101,6 +115,14 @@ flowsheet.ConnectObjects(
 )
 
 print("✅ Feed Connected to Pump")
+flowsheet.ConnectObjects(
+    pump_graphic,
+    product_graphic,
+    0,
+    0
+)
+
+print("✅ Pump Connected to Product")
 
 # ==========================================
 # Save Flowsheet
@@ -123,5 +145,3 @@ print("\n✅ Flowsheet Saved Successfully")
 print(fileNameToSave)
 
 print("\n" + "=" * 60)
-print("Day 4 Completed")
-print("=" * 60)
