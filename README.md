@@ -97,6 +97,7 @@ The implementation maps the screening requirements to the following components:
 | **Visualization** | Automated Matplotlib plots |
 | **Headless execution** | Python/DWSIM Automation API workflow |
 | **No prebuilt flowsheets** | All simulation flowsheets created at runtime |
+| **Interactive AI prompt** | Interactive simulation wizard defined in `PROMPT.prompt.md` |
 
 ---
 
@@ -120,7 +121,7 @@ The implementation maps the screening requirements to the following components:
 - Centralized simulation configuration
 - Modular source code structure
 - Headless execution
-- Optional interactive AI simulation workflow
+- Interactive AI simulation wizard and system prompt (`PROMPT.prompt.md`)
 
 ---
 
@@ -309,6 +310,9 @@ Central configuration location for:
 - Reaction kinetic parameters
 - Baseline process values and dynamic sweep ranges
 - DWSIM paths and output file locations
+
+### `PROMPT.prompt.md`
+Interactive AI Assistant System Prompt file. Configures an AI agent to guide users through simulation selection, parameter customization, headless script execution, formatted results presentation with file links, and technical chemical engineering explanations.
 
 ---
 
@@ -574,7 +578,57 @@ Chemical compounds, thermodynamic equations of state, material/energy streams, r
 
 # Interactive AI Enhancement
 
-An optional interactive AI prompt is included in `PROMPT.prompt.md`. When imported to an AI agent, it configures a wizard that guides the user through simulation selection, parameter customization, data validation, execution, and engineering explanation.
+The project includes an interactive AI system prompt in [`PROMPT.prompt.md`](file:///c:/Users/ramya/Desktop/DWSIM/PROMPT.prompt.md). When loaded into an AI assistant or LLM-enabled IDE environment, it turns the assistant into an interactive, step-by-step **Chemical Process Simulation and Automation Wizard**.
+
+### 1. Interactive Assistant Capabilities
+
+- **Guided Simulation Selection:** Interactive prompt for selecting Part A (PFR Isomerization), Part B (Distillation Column), Part C (Parametric Sweeps), or the Full Simulation Suite (`run_screening.py`).
+- **Dynamic Parameter Collection:** Solicits process parameters (PFR volumes/temperatures, column stage counts/reflux ratios, custom sweep bounds) while allowing users to press Enter to accept preconfigured defaults.
+- **Static vs. Dynamic Parameter Separation:** Clearly delineates user-controlled dynamic simulation parameters from fixed chemical engineering specifications (Peng-Robinson EOS, $n$-Pentane $\rightarrow$ Isopentane reaction kinetics, Arrhenius constants).
+- **Execution Safety & User Confirmation:** Displays a visual ASCII configuration summary box and demands explicit confirmation (`Proceed with running the simulation? (Yes/No)`) prior to script execution.
+- **Strict Zero-Fabrication Policy:** Mandates that no results are constructed or guessed manually. The AI agent executes actual project scripts (`run_part_a.py`, `run_part_b.py`, `run_part_c.py`, `run_screening.py`) headlessly via the DWSIM Automation API.
+- **Formatted Markdown Tables & File Links:** Presents key simulation metrics (Conversion, purities, heat duties) in formatted tables and provides clickable `file://` URIs for generated output files (`results.csv`, `pfr_sweep_results.csv`, `column_sweep_results.csv`, plot PNGs, and `.dwxmz` flowsheets).
+- **Engineering Explanation Engine:** Provides clear, technical chemical engineering explanations for thermodynamic modeling (Peng-Robinson EOS), reaction kinetics, MESH equations for rigorous fractionation, and heat duty sign conventions upon user request.
+
+### 2. Configurable Dynamic Input Parameters
+
+| Simulation Part | Adjustable Parameters | Default Value |
+| :--- | :--- | :--- |
+| **Part A (PFR)** | Reactor Volume ($m^3$)<br>Feed Temperature ($K$)<br>Feed Pressure ($Pa$)<br>Feed Molar Flow ($mol/s$) | $5.0\ \text{m}^3$<br>$373.15\ \text{K}$<br>Config default ($101.3\ \text{kPa}$)<br>$100.0\ \text{mol/s}$ |
+| **Part B (Distillation)** | Number of Stages<br>Feed Stage<br>Reflux Ratio<br>Distillate Molar Flow ($mol/s$) | $20$<br>$10$<br>$2.50$<br>$50.0\ \text{mol/s}$ |
+| **Part C (PFR Sweep)** | Reactor Volume range ($m^3$)<br>Feed Temperature range ($K$) | Volumes: $[1.0, 2.5, 5.0, 7.5, 10.0]$<br>Temperatures: $[350.15, 373.15, 393.15, 413.15]$ |
+| **Part C (Distillation Sweep)** | Number of Stages range<br>Reflux Ratio range | Stages: $[12, 16, 20, 24]$<br>Reflux Ratios: $[1.5, 2.0, 2.5, 3.5, 5.0]$ |
+
+### 3. Workflow Execution Flow
+
+```text
+User Request / AI Prompt Load
+             │
+             ▼
+    [1] Select Simulation (Part A / B / C / Full Suite)
+             │
+             ▼
+    [2] Collect Dynamic Inputs (or accept defaults)
+             │
+             ▼
+    [3] Display Dynamic Summary Box & Static Configuration
+             │
+             ▼
+    [4] User Confirmation (Yes/No)
+             │
+             ▼
+    [5] Headless Script Execution (python run_*.py)
+             │
+             ▼
+    [6] Render Markdown Result Tables & Clickable file:// Links
+             │
+             ▼
+    [7] Optional Chemical Engineering Technical Explanation
+```
+
+### 4. How to Use `PROMPT.prompt.md`
+
+To activate the assistant, copy or reference the full contents of [`PROMPT.prompt.md`](file:///c:/Users/ramya/Desktop/DWSIM/PROMPT.prompt.md) into your AI assistant context window or system prompt configuration.
 
 ---
 
