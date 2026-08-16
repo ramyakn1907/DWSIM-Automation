@@ -33,6 +33,7 @@ All simulation flowsheets are created programmatically at runtime. No prebuilt D
 - [Result Logging](#result-logging)
 - [Failure Handling](#failure-handling)
 - [Generated Outputs](#generated-outputs)
+- [Screenshots](#screenshots)
 - [Visualization](#visualization)
 - [Headless Execution](#headless-execution)
 - [No Prebuilt Flowsheet Design](#no-prebuilt-flowsheet-design)
@@ -521,6 +522,76 @@ Every simulation case has a unique Case ID (e.g., `CASE-001` to `CASE-042`) and 
 3. **Column Variables & KPIs:** `Column_Stages`, `Column_Feed_Stage`, `Column_Reflux_Ratio`, `Column_Distillate_Purity_pct`, `Column_Bottoms_Purity_pct`, `Column_Condenser_Duty_kW`, `Column_Reboiler_Duty_kW`
 
 ---
+# Screenshots
+
+## Interactive Simulation Selection
+
+The AI enhancement allows the user to select the required simulation
+activity before execution.
+
+![Simulation Selection](docs/screenshots/prompt_step1.png)
+
+---
+
+## Simulation Configuration
+
+Before execution, the assistant displays the selected sweep parameters,
+static chemical configuration, and asks for confirmation.
+
+![Simulation Configuration](docs/screenshots/prompt_step2.png)
+
+---
+
+## Customized Parametric Sweep
+
+The user can customize individual sweep parameters while keeping the
+remaining parameters at their configured defaults.
+
+![Customized Sweep Configuration](docs/screenshots/prompt_step3.png)
+
+---
+
+## Parametric Simulation Results
+
+The interactive workflow displays the generated simulation results,
+including reactor volume, feed temperature, conversion, heat duty, and
+simulation status.
+
+![Parametric Results](docs/screenshots/prompt_step5.png)
+
+---
+
+## PFR Conversion vs Reactor Volume
+
+The generated PFR plot shows the relationship between reactor volume and
+n-pentane conversion at different feed temperatures.
+
+![PFR Conversion vs Volume](docs/screenshots/pfr_conversion_vs_volume.png)
+
+---
+
+## Distillation Purity vs Reflux Ratio
+
+The generated distillation plot shows the relationship between reflux ratio
+and isopentane distillate purity for different numbers of column stages.
+
+![Column Purity vs Reflux](docs/screenshots/column_purity_vs_reflux.png)
+
+---
+
+## Generated DWSIM Flowsheets
+
+The project also exports the programmatically generated DWSIM flowsheets
+for inspection.
+
+### PFR Flowsheet
+
+![PFR DWSIM Flowsheet](docs/screenshots/pfr_flowsheet.png)
+
+### Distillation Flowsheet
+
+![Distillation DWSIM Flowsheet](docs/screenshots/distillation_flowsheet.png)
+
 
 # Failure Handling
 
