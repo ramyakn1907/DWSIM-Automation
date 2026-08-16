@@ -41,9 +41,7 @@ for _d in [OUTPUTS_DIR, FLOWSHEETS_DIR, PLOTS_DIR]:
 
 
 def main() -> None:
-    print("=" * 70)
-    print("      DWSIM AUTOMATION API – CANDIDATE SCREENING RUNNER       ")
-    print("=" * 70)
+
     t0 = time.time()
 
     #  Part A: PFR Baseline Simulation 
