@@ -1,4 +1,4 @@
-# DWSIM Python Automation API – Candidate Screening Suite
+# DWSIM Python Automation API 
 
 A Python-based, headless chemical process simulation framework developed using the **DWSIM Automation API** and **pythonnet**.
 

@@ -446,10 +446,44 @@ Provide direct clickable links using `file://` scheme to access all generated ou
 
 ---
 
-# 11. Engineering Explanations
+# 11. Engineering Explanations & Post-Execution Options
 
-Ask the user if they would like a concise technical explanation of the chemical engineering principles involved in the study:
-1. **Thermodynamic Modeling:** Peng-Robinson Cubic Equation of State (PR EOS) and its suitability for light hydrocarbon mixtures.
-2. **Reactor Kinetics:** Isothermal Plug Flow Reactor (PFR) sizing, Arrhenius dependency, and conversion limits.
-3. **Rigorous Fractionation:** MESH equations (Material, Equilibrium, Summation, Heat balances) and vapor-liquid equilibrium (VLE).
-4. **Heat Duty Sign Convention:** Exothermic reaction heat extraction and reboiler/condenser thermal energy duties.
+After presenting the simulation results and output links, ask the user if they would like an explanation of the results and underlying chemical engineering principles.
+
+## 11.1 Formatting & Clarity Requirements
+When outputting explanations, ensure they are easy to read and understand:
+- Use clean, standard Markdown instead of raw/unrendered LaTeX math syntax (avoid confusing code like `\text{...}`, `\xrightarrow`, `\frac{}{}`, or `\circ`).
+- Do not mix up single dollar signs `$ ` for currency/percentages with math mode formatting, as this breaks markdown renderers.
+- Provide simple, step-by-step breakdowns alongside any chemical engineering formulas so non-experts can easily digest the results.
+
+## 11.2 Execution-Aware Explanation Scoping
+
+The explanation provided MUST strictly match what was executed, or respond to an explicit request to explain the whole suite:
+
+- **Part A Only (`python run_part_a.py`):**
+  If only Part A was run, explain ONLY Part A:
+  - **Reactor Kinetics:** Isothermal Plug Flow Reactor (PFR) sizing, Arrhenius reaction rate dependency (`n-pentane -> isopentane`), and conversion limits.
+  - **Thermodynamic EOS:** Peng-Robinson Cubic Equation of State (PR EOS) for light hydrocarbon mixtures.
+  - **Reactor Thermal Duty:** Exothermic reaction heat balance and duty requirements.
+
+- **Part B Only (`python run_part_b.py`):**
+  If only Part B was run, explain ONLY Part B:
+  - **Rigorous Fractionation:** MESH equations (Material, Equilibrium, Summation, Heat balances) and vapor-liquid equilibrium (VLE).
+  - **Column Parameters:** Impact of stage count, feed tray location, reflux ratio, and distillate flow specification on product purity (`n-pentane` vs. `isopentane`).
+  - **Reboiler & Condenser Duties:** Thermal duties required for distillation separation.
+
+- **Part C Only (`python run_part_c.py`):**
+  If only Part C was run, explain ONLY Part C:
+  - **Parametric Sweeps & Sensitivity:** Multi-variable sensitivity analysis, parameter interaction effects (Volume vs. Temperature for PFR; Stages vs. Reflux Ratio for Distillation).
+  - **Trade-off Analysis:** Engineering trade-offs between capital expenditure (reactor size/column stages) and operational parameters (temperature/reflux ratio).
+
+- **Full Suite (`python run_screening.py`) OR User Requests "Explain Whole":**
+  If the full simulation suite was executed OR if the user explicitly asks to explain the whole process ("explain whole"), provide a comprehensive explanation covering all three parts (Part A + Part B + Part C integrated).
+
+## 11.3 Post-Execution Options Prompt
+
+After displaying output links, offer the user clear options based on the command run:
+
+1. **Explain Executed Command:** Explain only the specific simulation/command that was just run (e.g., Part A only, Part B only, or Part C only).
+2. **Explain Whole Simulation:** Explain the entire process simulation suite (PFR + Distillation + Parametric Sweeps).
+3. **Run Another Simulation:** Return to Step 1 to configure and run a new simulation case.
